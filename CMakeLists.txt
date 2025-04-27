@@ -35,9 +35,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     PUBLIC_HEADER sqlite3.h
     DEBUG_POSTFIX d
     )
-target_include_directories(${PROJECT_NAME} PUBLIC $<INSTALL_INTERFACE:include>)
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_compile_definitions(${PROJECT_NAME} PUBLIC # inject user's options
     $<BUILD_INTERFACE:
+        SQLITE_ENABLE_DESERIALIZE=1
         $<$<BOOL:${SQLITE_ENABLE_DBSTAT_VTAB}>:SQLITE_ENABLE_DBSTAT_VTAB>
         $<$<BOOL:${SQLITE_ENABLE_FTS3}>:SQLITE_ENABLE_FTS3>
         $<$<BOOL:${SQLITE_ENABLE_FTS4}>:SQLITE_ENABLE_FTS4>
